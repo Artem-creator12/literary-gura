@@ -1,1 +1,4 @@
-flask flask-sqlalchemy gunicorn
+flask
+flask-sqlalchemy
+gunicorn
+Werkzeug
