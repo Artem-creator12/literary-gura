@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование {{ book.title }}</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .admin-form { background: #f5f5f5; padding: 20px; border-radius: 8px; }
+        input, textarea { display: block; width: 100%; margin: 10px 0; padding: 8px; }
+        textarea { height: 100px; }
+        .btn { padding: 10px 20px; background: #4dabf7; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background: #339af0; }
+    </style>
+</head>
+<body>
+    <h2>✏️ Редактирование: {{ book.title }}</h2>
+    <form method="POST" class="admin-form">
+        <input type="text" name="title" value="{{ book.title }}" required>
+        <textarea name="summary" placeholder="Краткая справка">{{ book.summary or '' }}</textarea>
+        <input type="url" name="book_link" placeholder="Ссылка на книгу" value="{{ book.book_link or '' }}">
+        <input type="url" name="summary_link" placeholder="Ссылка на краткое содержание" value="{{ book.summary_link or '' }}">
+        <input type="url" name="film_link" placeholder="Ссылка на фильм" value="{{ book.film_link or '' }}">
+        <textarea name="ai_explanation" placeholder="Пояснение от нейросети">{{ book.ai_explanation or '' }}</textarea>
+        <button type="submit" class="btn">💾 Сохранить изменения</button>
+    </form>
+    <p><a href="{{ url_for('admin_dashboard') }}">← Вернуться в админ-панель</a></p>
+</body>
+</html>
