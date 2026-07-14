@@ -1,4 +1,4 @@
-flask
-flask-sqlalchemy
-gunicorn
-Werkzeug
+Flask==2.3.3
+flask-sqlalchemy==3.1.1
+gunicorn==21.2.0
+Werkzeug==2.3.8
