@@ -1,17 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_sqlalchemy import SQLite
+from flask_sqlalchemy import SQLAlchemy
 import hashlib
+import os
 
 app = Flask(__name__)
-app.secret_key = 'ваш-секретный-ключ'  # измените на свой
+app.secret_key = os.environ.get('SECRET_KEY', 'supersecretkey2026')
 
 # Настройка базы данных
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLite(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS = False
+db = SQLAlchemy(app)
 
-# Пароль админа (хранится в хеше)
-ADMIN_PASSWORD_HASH = hashlib.sha256('123456'.encode()).hexdigest()
+# Пароль админа (из переменных окружения или по умолчанию)
+admin_password = os.environ.get('ADMIN_PASSWORD', '123456')
+ADMIN_PASSWORD_HASH = hashlib.sha256(admin_password.encode()).hexdigest()
 
 # Модели базы данных
 class Author(db.Model):
@@ -23,11 +25,11 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
-    summary = db.Column(db.Text)  # краткая справка
-    book_link = db.Column(db.String(500))  # ссылка на книгу
-    summary_link = db.Column(db.String(500))  # ссылка на краткое содержание
-    film_link = db.Column(db.String(500))  # ссылка на фильм
-    ai_explanation = db.Column(db.Text)  # пояснение нейросети
+    summary = db.Column(db.Text)
+    book_link = db.Column(db.String(500))
+    summary_link = db.Column(db.String(500))
+    film_link = db.Column(db.String(500))
+    ai_explanation = db.Column(db.Text)
 
 # Создание таблиц
 with app.app_context():
