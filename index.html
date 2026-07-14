@@ -14,19 +14,25 @@
             color: #333;
         }
         .author-card:hover { background: #e0e0e0; }
+        .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 14px; color: #888; text-align: center; }
+        .footer a { color: #888; }
     </style>
 </head>
 <body>
     <h1>📚 Литературный гид</h1>
+    <p>Выберите автора, чтобы посмотреть его произведения</p>
     <div style="margin-top: 20px;">
         {% for author in authors %}
             <a href="{{ url_for('author_books', author_id=author.id) }}" class="author-card">
                 {{ author.name }}
             </a>
+        {% else %}
+            <p>Авторы пока не добавлены. Зайдите в админ-панель, чтобы добавить.</p>
         {% endfor %}
     </div>
-    <div style="margin-top: 40px; font-size: 14px; color: #888;">
-        <a href="{{ url_for('admin_login') }}" style="color: #888;">Админ-панель</a>
+    <div class="footer">
+        <a href="{{ url_for('admin_login') }}">Админ-панель</a> | 
+        <span>Все права на произведения принадлежат авторам и правообладателям. Сайт не хранит тексты — только ссылки и пояснения нейросети.</span>
     </div>
 </body>
 </html>
