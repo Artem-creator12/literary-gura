@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Админ-панель</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .admin-form { background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        input, textarea { display: block; width: 100%; margin: 10px 0; padding: 8px; }
+        textarea { height: 80px; }
+        .book-item { border-left: 3px solid #ccc; padding-left: 15px; margin: 15px 0; }
+        .btn { display: inline-block; padding: 5px 10px; margin: 2px; background: #ddd; text-decoration: none; color: #333; border-radius: 4px; }
+        .btn-danger { background: #ff6b6b; color: white; }
+        .btn-success { background: #51cf66; color: white; }
+        .author-block { margin: 30px 0; padding: 15px; border: 1px solid #eee; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h2>⚙️ Управление контентом</h2>
+    <p><a href="{{ url_for('admin_logout') }}">Выйти</a></p>
+
+    <!-- Форма добавления автора -->
+    <div class="admin-form">
+        <h3>➕ Добавить автора</h3>
+        <form method="POST" action="{{ url_for('add_author') }}">
+            <input type="text" name="name" placeholder="Имя автора" required>
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </form>
+    </div>
+
+    <!-- Список авторов и их произведений -->
+    {% for author in authors %}
+    <div class="author-block">
+        <h3>{{ author.name }}
+            <a href="{{ url_for('delete_author', author_id=author.id) }}" class="btn btn-danger" onclick="return confirm('Удалить автора и все его произведения?')">🗑️ Удалить</a>
+        </h3>
+        
+        <!-- Форма добавления произведения -->
+        <div class="admin-form">
+            <h4>📖 Добавить произведение</h4>
+            <form method="POST" action="{{ url_for('add_book', author_id=author.id) }}">
+                <input type="text" name="title" placeholder="Название" required>
+                <textarea name="summary" placeholder="Краткая справка"></textarea>
+                <input type="url" name="book_link" placeholder="Ссылка на книгу (URL)">
+                <input type="url" name="summary_link" placeholder="Ссылка на краткое содержание (URL)">
+                <input type="url" name="film_link" placeholder="Ссылка на фильм (URL)">
+                <textarea name="ai_explanation" placeholder="Пояснение от нейросети"></textarea>
+                <button type="submit" class="btn btn-success">Добавить произведение</button>
+            </form>
+        </div>
+
+        <!-- Список произведений -->
+        {% for book in author.books %}
+        <div class="book-item">
+            <strong>{{ book.title }}</strong>
+            <a href="{{ url_for('edit_book', book_id=book.id) }}" class="btn">✏️ Редактировать</a>
+            <a href="{{ url_for('delete_book', book_id=book.id) }}" class="btn btn-danger" onclick="return confirm('Удалить?')">🗑️</a>
+            <details>
+                <summary>Просмотреть данные</summary>
+                <p><strong>Справка:</strong> {{ book.summary or '—' }}</p>
+                <p><strong>Книга:</strong> <a href="{{ book.book_link }}">{{ book.book_link or '—' }}</a></p>
+                <p><strong>Краткое содержание:</strong> <a href="{{ book.summary_link }}">{{ book.summary_link or '—' }}</a></p>
+                <p><strong>Фильм:</strong> <a href="{{ book.film_link }}">{{ book.film_link or '—' }}</a></p>
+                <p><strong>Объяснение нейросети:</strong> {{ book.ai_explanation or '—' }}</p>
+            </details>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</body>
+</html>

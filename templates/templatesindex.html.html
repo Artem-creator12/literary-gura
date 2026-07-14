@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Литературный гид</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .author-card { 
+            display: inline-block; 
+            padding: 20px 40px; 
+            margin: 10px; 
+            background: #f0f0f0; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            color: #333;
+        }
+        .author-card:hover { background: #e0e0e0; }
+    </style>
+</head>
+<body>
+    <h1>📚 Литературный гид</h1>
+    <div style="margin-top: 20px;">
+        {% for author in authors %}
+            <a href="{{ url_for('author_books', author_id=author.id) }}" class="author-card">
+                {{ author.name }}
+            </a>
+        {% endfor %}
+    </div>
+    <div style="margin-top: 40px; font-size: 14px; color: #888;">
+        <a href="{{ url_for('admin_login') }}" style="color: #888;">Админ-панель</a>
+    </div>
+</body>
+</html>
