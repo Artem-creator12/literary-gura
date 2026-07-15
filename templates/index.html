@@ -14,8 +14,20 @@
             color: #333;
         }
         .author-card:hover { background: #e0e0e0; }
-        .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 14px; color: #888; text-align: center; }
-        .footer a { color: #888; }
+        .footer { 
+            margin-top: 60px; 
+            padding-top: 20px; 
+            border-top: 1px solid #ddd; 
+            font-size: 14px; 
+            color: #888; 
+            text-align: center; 
+        }
+        .footer a { 
+            color: #4dabf7; 
+            text-decoration: none; 
+            font-weight: bold; 
+        }
+        .footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -27,12 +39,16 @@
                 {{ author.name }}
             </a>
         {% else %}
-            <p>Авторы пока не добавлены. Зайдите в админ-панель, чтобы добавить.</p>
+            <p>Авторы пока не добавлены.</p>
         {% endfor %}
     </div>
+
     <div class="footer">
-        <a href="{{ url_for('admin_login') }}">Админ-панель</a> | 
-        <span>Все права на произведения принадлежат авторам и правообладателям. Сайт не хранит тексты — только ссылки и пояснения нейросети.</span>
+        <a href="https://t.me/ВАШ_КАНАЛ" target="_blank">📢 Наш Telegram-канал</a>
+        <br>
+        <span style="font-size: 12px; color: #aaa;">
+            Все права на произведения принадлежат авторам. Сайт не хранит тексты — только ссылки и пояснения нейросети.
+        </span>
     </div>
 </body>
 </html>
