@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вход для админа</title>
+    <style>
+        body { font-family: sans-serif; max-width: 400px; margin: 100px auto; padding: 0 20px; }
+        .login-box { background: #f8f9fa; padding: 40px; border-radius: 12px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #4dabf7; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #339af0; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>🔐 Вход в админ-панель</h2>
+        <form method="POST">
+            <input type="password" name="password" placeholder="Введите пароль" required>
+            <button type="submit">Войти</button>
+        </form>
+        <p style="margin-top: 20px; font-size: 14px; color: #888;">
+            <a href="{{ url_for('index') }}" style="color:#888;">← На главную</a>
+        </p>
+    </div>
+</body>
+</html>
