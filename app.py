@@ -8,7 +8,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'supersecretkey2026')
 
 # Настройка базы данных
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Пароль админа (из переменных окружения или по умолчанию)
