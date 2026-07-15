@@ -5,10 +5,12 @@
     <style>
         body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
         .admin-form { background: #f5f5f5; padding: 20px; border-radius: 8px; }
-        input, textarea { display: block; width: 100%; margin: 10px 0; padding: 8px; }
+        input, textarea { display: block; width: 100%; margin: 10px 0; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 4px; }
         textarea { height: 100px; }
         .btn { padding: 10px 20px; background: #4dabf7; color: white; border: none; border-radius: 4px; cursor: pointer; }
         .btn:hover { background: #339af0; }
+        .back-link { color: #888; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -22,6 +24,6 @@
         <textarea name="ai_explanation" placeholder="Пояснение от нейросети">{{ book.ai_explanation or '' }}</textarea>
         <button type="submit" class="btn">💾 Сохранить изменения</button>
     </form>
-    <p><a href="{{ url_for('admin_dashboard') }}">← Вернуться в админ-панель</a></p>
+    <p><a href="{{ url_for('admin_dashboard') }}" class="back-link">← Вернуться в админ-панель</a></p>
 </body>
 </html>
