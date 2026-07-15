@@ -4,18 +4,21 @@ import hashlib
 import os
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'supersecretkey2026')
+app.secret_key = 'supersecretkey2026'  # можно поменять
 
-# Настройка базы данных
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books.db'
+# === НАСТРОЙКА БАЗЫ ДАННЫХ ДЛЯ PYTHONANYWHERE ===
+# База будет лежать рядом с app.py и НЕ СЛЕТИТ
+import sys
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, 'books.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Пароль админа (из переменных окружения или по умолчанию)
-admin_password = os.environ.get('ADMIN_PASSWORD', '123456')
-ADMIN_PASSWORD_HASH = hashlib.sha256(admin_password.encode()).hexdigest()
+# === ПАРОЛЬ АДМИНА (измените на свой) ===
+ADMIN_PASSWORD_HASH = hashlib.sha256('123456'.encode()).hexdigest()
 
-# Модели базы данных
+# === МОДЕЛИ БАЗЫ ДАННЫХ ===
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
@@ -31,7 +34,7 @@ class Book(db.Model):
     film_link = db.Column(db.String(500))
     ai_explanation = db.Column(db.Text)
 
-# Создание таблиц
+# === СОЗДАНИЕ ТАБЛИЦ (если их нет) ===
 with app.app_context():
     db.create_all()
 
@@ -52,9 +55,13 @@ def book_detail(book_id):
     book = Book.query.get_or_404(book_id)
     return render_template('book.html', book=book)
 
-# ========== АДМИН-ПАНЕЛЬ ==========
+# ========== СКРЫТАЯ АДМИН-ПАНЕЛЬ ==========
+# Вместо /admin теперь /my-secret-panel-2026
+# ЗНАЙТЕ ЭТОТ АДРЕС! НИКОМУ НЕ ГОВОРИТЕ!
 
-@app.route('/admin', methods=['GET', 'POST'])
+SECRET_ADMIN_URL = '/my-secret-panel-2026'
+
+@app.route(SECRET_ADMIN_URL, methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
         password = request.form['password']
@@ -140,4 +147,4 @@ def admin_logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)  # Для PythonAnywhere обязательно False
