@@ -15,17 +15,23 @@
             border-left: 4px solid #4dabf7;
         }
         .book-card:hover { background: #e9ecef; }
+        .back-link { color: #4dabf7; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 14px; color: #888; text-align: center; }
     </style>
 </head>
 <body>
-    <a href="{{ url_for('index') }}">← Назад к авторам</a>
+    <a href="{{ url_for('index') }}" class="back-link">← Назад к авторам</a>
     <h1>📖 Произведения {{ author.name }}</h1>
     {% for book in author.books %}
         <a href="{{ url_for('book_detail', book_id=book.id) }}" class="book-card">
-            {{ book.title }}
+            <strong>{{ book.title }}</strong>
         </a>
     {% else %}
         <p>У этого автора пока нет произведений.</p>
     {% endfor %}
+    <div class="footer">
+        <a href="{{ url_for('admin_login') }}" style="color:#888;">Админ-панель</a>
+    </div>
 </body>
 </html>
